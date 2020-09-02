@@ -1,8 +1,9 @@
 from adventurelib import start, when
 import adventurelib
-import dice
+import dice,cfg
 from colorama import init, Fore, Back, Style
 import descriptions
+import Players
 
 init(convert=True)
 print(descriptions.intro)
@@ -14,5 +15,6 @@ def h():
     adventurelib.help()
 
 
-dice.roll(6, 1)
+player=Players.Player("Zuvo",8,cfg.start_life,cfg.start_mana,0,0,0,0,{})
+print(player.level)
 start(help=False)

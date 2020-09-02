@@ -10,6 +10,3 @@ def roll(size, count):
         if cfg.print_dice_results:
             print("Dice 1d{} rolled {}".format(size, rnd))
     return sum
-
-
-roll(4, 2)

@@ -2,10 +2,13 @@ from adventurelib import when
 import cfg 
 
 class Spell:
-    def __init__(self, name, description, typ):
+    def __init__(self, name, description, typ, chance,mc):
         self.name=name
         self.description=description
         self.typ=typ
+        self.chance=chance
+        self.mc=mc
+
     
     def cast_spell(self, target, caster):
         print(caster+ "casts "+self.name)
