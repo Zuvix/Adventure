@@ -1,18 +1,18 @@
-from adventurelib import *
+from adventurelib import start, when
+import adventurelib
+import dice
 from colorama import init, Fore, Back, Style
-import time
-import sys
-def slowprint(s):
-  for c in s + '\n':
-    sys.stdout.write(c)
-    sys.stdout.flush()
-    time.sleep(1./12)
-@when("brush teeth")
-def brush_teeth():
-    say("""
-        You squirt a bit too much toothpaste onto your
-        brush and dozily jiggle it round your mouth.
-    """)
-    print (f"This is a {Fore.GREEN}good item{Style.RESET_ALL}")
+import descriptions
+
 init(convert=True)
-start()
+print(descriptions.intro)
+
+
+#Global commands
+@when("help")
+def h():
+    adventurelib.help()
+
+
+dice.roll(6, 1)
+start(help=False)
