@@ -3,7 +3,7 @@ import adventurelib
 import dice,cfg
 from colorama import init, Fore, Back, Style
 import descriptions
-import Players,spells
+import Players,spells_logic
 Enemy=None
 player=Players.Player("Zuvo",["rock throw"],[])
 init(convert=True)
@@ -18,8 +18,8 @@ set_context("combat")
 @when('cast SPELL',context="combat")
 def casting(spell):
     if spell in player.spells:
-        if spell in spells.spells:
-            spells.spells[spell].cast_spell(player,player)
+        if spell in spells_logic.spells:
+            spells_logic.spells[spell].cast_spell(player,player)
     else:
         print("Invalid casting instructions.")
 

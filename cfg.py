@@ -28,7 +28,6 @@ class Magic(NamedTuple):
     rarity: str
     gold_cost:int
     concentration: int
-    magic_attributes: dict
 
 spell_stats={}
 #Magic(name="",mc=0,typ="",rarity="",gold_cost=0,concentration=0,magic_attributes={})
@@ -41,5 +40,4 @@ spell_stats["rock throw"]=Magic(
     rarity="none",
     gold_cost=0,
     concentration=5,
-    magic_attributes={"flat_dmg":{"dmg": 3,"scaling": 2}}
 )

@@ -62,7 +62,7 @@ class Player:
 
     def take_damage(self,damage):
         self.HP-=damage
-        print("You lose "+Fore.RED+"{} HP".format(damage)+Style.RESET_ALL+", you have"+Fore.RED+" {}/{} HP.".format(self.HP,self.MaxHP)+Style.RESET_ALL)
+        print("You lose "+Fore.RED+"{} HP".format(damage)+Style.RESET_ALL+", you have"+Fore.RED+" {}/{} HP".format(self.HP,self.MaxHP)+Style.RESET_ALL)
     
     def heal(self, heal):
         to_heal=heal
@@ -70,7 +70,7 @@ class Player:
             to_heal=self.MaxHP-self.HP
         self.HP+=to_heal
         if to_heal>0: 
-            print("You are healed for "+Fore.GREEN+"{} HP".format(to_heal)+Style.RESET_ALL+", you have {}/{} HP.".format(self.HP,self.MaxHP))
+            print("You are healed for "+Fore.GREEN+"{} HP".format(to_heal)+Style.RESET_ALL+", you have {}/{} HP".format(self.HP,self.MaxHP))
         else:
             print("You can't heal, if you are at MAX HP.")
     

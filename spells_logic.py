@@ -1,10 +1,22 @@
 from adventurelib import when
 import cfg,Players,dice
-from colorama import Fore,Style
+from colorama import Fore,Style,Back
+
+def color_spell_name(typ,name):
+    special_name=name
+    if typ=="offensive" or typ=="RED":
+        special_name=Fore.LIGHTRED_EX+name+Style.RESET_ALL
+    elif typ=="protective" or typ=="GREEN":
+        special_name=Fore.GREEN+name+Style.RESET_ALL
+    elif typ=="curse" or typ=="MAGENTA":
+        special_name=Fore.MAGENTA+name+Style.RESET_ALL
+    elif typ=="trick"or typ=="BLUE":
+        special_name=Fore.BLUE+name+Style.RESET_ALL
+    return special_name
 
 spells=dict()
 class Spell:
-    def __init__(self, name, description, typ ,gold_cost, rarity, concentration,mc, magic_attributes,magic_functions):
+    def __init__(self, name, description, typ ,gold_cost, rarity, concentration,mc,magic_function):
         self.name=name
         self.description=description
         self.typ=typ
@@ -12,12 +24,12 @@ class Spell:
         self.gold_cost=gold_cost
         self.rarity=rarity
         self.mc=mc
-        self.magic_attributes=magic_attributes
-        self.magic_functions=magic_functions
+        self.magic_function=magic_function
     
     def cast_spell(self, target, caster):
         print("")
-        print(caster.name+ " casts "+Style.DIM+self.name+Style.RESET_ALL)
+        special_name=color_spell_name(self.typ,self.name)   
+        print(caster.name+ " casts "+special_name)
         if isinstance(caster,Players.Player):
             if caster.MP>self.mc:
                 caster.MP-=self.mc
@@ -26,30 +38,24 @@ class Spell:
                 result=dice.roll(20,1,show_result=False)
                 if result>=self.concentration:
                     print(Fore.LIGHTGREEN_EX+"Casting succesful, you concentration was: {} + {} (MIND) = {}".format(result,caster.MIND,result+caster.MIND)+Style.RESET_ALL)
-                    for x in self.magic_functions:
-                        x(caster,target,self.name)
+                    self.magic_function(caster,target,self.name)
                 else:
                     print(Fore.LIGHTRED_EX+"Failure, your concentration was too low: {} + {} (MIND) = {}".format(result,caster.MIND,result+caster.MIND)+Style.RESET_ALL)
-                
-def deal_flat_damage(caster,target,spell_name):
-    damage=spells[spell_name]. magic_attributes["flat_dmg"]["dmg"]
-    if spells[spell_name]. magic_attributes["flat_dmg"]["scaling"]:
-        scaling=spells[spell_name]. magic_attributes["flat_dmg"]["scaling"]
-        scaled_dmg=damage+scaling*caster.FORCE
-        print("{} deals {} + {} x {} (FORCE) = {} dmg to {}".format(spell_name,damage,scaling,caster.FORCE,scaled_dmg,target.name))
-        target.take_damage(damage)
-    else:
-        print("{} deals {} dmg to {}".format(spell_name,damage,target.name))
-        target.take_damage(damage)
+
+#Magic Functions for spells                
+magic_functions={}
+
+def rock_throw(caster,target,spell_name):
+    damage=2+int(caster.level/2)
+    print("{} deals 2 + {} (lvl/2) = {} dmg to {}".format(spell_name,int(caster.level/2),damage,target.name))
+    target.take_damage(damage)
+magic_functions["rock throw"]=rock_throw
 
 
 #Generate Spells From Cfg
 for magic in cfg.spell_stats:
     x=cfg.spell_stats[magic]
-    new_spell=Spell(x.spell_name,"",x.typ,x.gold_cost,x.rarity,x.concentration,x.mc,x.magic_attributes,[])
-    for atr in x.magic_attributes:
-        if atr=="flat_dmg":
-            new_spell.magic_functions.append(deal_flat_damage)
+    new_spell=Spell(x.spell_name,"",x.typ,x.gold_cost,x.rarity,x.concentration,x.mc,magic_functions[x.spell_name])
     spells[x.spell_name]=new_spell
 
 
