@@ -10,7 +10,7 @@ start_mana=30
 start_VIT=0
 start_INT=0
 start_MIND=0
-start_FORCE=0
+start_FORCE=5
 
 HP_per_lvl=4
 MP_per_lvl=4
@@ -30,7 +30,6 @@ class Magic(NamedTuple):
     concentration: int
     magic_attributes: dict
 
-
 spell_stats={}
 #Magic(name="",mc=0,typ="",rarity="",gold_cost=0,concentration=0,magic_attributes={})
 
@@ -38,8 +37,9 @@ spell_stats={}
 spell_stats["rock throw"]=Magic(
     spell_name="rock throw",
     mc=0,
-    typ="damage",
+    typ="offensive",
     rarity="none",
     gold_cost=0,
     concentration=5,
-    magic_attributes={'flat_dmg': 3})
+    magic_attributes={"flat_dmg":{"dmg": 3,"scaling": 2}}
+)

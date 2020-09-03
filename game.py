@@ -1,4 +1,4 @@
-from adventurelib import start, when
+from adventurelib import start, when,set_context
 import adventurelib
 import dice,cfg
 from colorama import init, Fore, Back, Style
@@ -14,8 +14,8 @@ print(descriptions.intro)
 def h():
     adventurelib.help()
 
-print(player.spells)
-@when('cast SPELL')
+set_context("combat")
+@when('cast SPELL',context="combat")
 def casting(spell):
     if spell in player.spells:
         if spell in spells.spells:

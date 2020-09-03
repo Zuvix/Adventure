@@ -17,7 +17,7 @@ class Spell:
     
     def cast_spell(self, target, caster):
         print("")
-        print(caster.name+ " casts "+self.name)
+        print(caster.name+ " casts "+Style.DIM+self.name+Style.RESET_ALL)
         if isinstance(caster,Players.Player):
             if caster.MP>self.mc:
                 caster.MP-=self.mc
@@ -32,9 +32,16 @@ class Spell:
                     print(Fore.LIGHTRED_EX+"Failure, your concentration was too low: {} + {} (MIND) = {}".format(result,caster.MIND,result+caster.MIND)+Style.RESET_ALL)
                 
 def deal_flat_damage(caster,target,spell_name):
-    damage=spells[spell_name]. magic_attributes["flat_dmg"]
-    print("{} deals {} dmg to {}".format(spell_name,damage,target.name))
-    target.take_damage(damage)
+    damage=spells[spell_name]. magic_attributes["flat_dmg"]["dmg"]
+    if spells[spell_name]. magic_attributes["flat_dmg"]["scaling"]:
+        scaling=spells[spell_name]. magic_attributes["flat_dmg"]["scaling"]
+        scaled_dmg=damage+scaling*caster.FORCE
+        print("{} deals {} + {} x {} (FORCE) = {} dmg to {}".format(spell_name,damage,scaling,caster.FORCE,scaled_dmg,target.name))
+        target.take_damage(damage)
+    else:
+        print("{} deals {} dmg to {}".format(spell_name,damage,target.name))
+        target.take_damage(damage)
+
 
 #Generate Spells From Cfg
 for magic in cfg.spell_stats:
