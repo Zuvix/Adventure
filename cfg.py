@@ -10,7 +10,7 @@ start_mana=30
 start_VIT=0
 start_INT=0
 start_MIND=0
-start_FORCE=5
+start_FORCE=0
 
 HP_per_lvl=4
 MP_per_lvl=4
@@ -36,6 +36,15 @@ spell_stats={}
 spell_stats["rock throw"]=Magic(
     spell_name="rock throw",
     mc=0,
+    typ="offensive",
+    rarity="none",
+    gold_cost=0,
+    concentration=2,
+)
+
+spell_stats["firebolt"]=Magic(
+    spell_name="firebolt",
+    mc=5,
     typ="offensive",
     rarity="none",
     gold_cost=0,

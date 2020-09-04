@@ -46,10 +46,22 @@ class Spell:
 magic_functions={}
 
 def rock_throw(caster,target,spell_name):
-    damage=2+int(caster.level/2)
+    damage=1+int(caster.level/2)
     print("{} deals 2 + {} (lvl/2) = {} dmg to {}".format(spell_name,int(caster.level/2),damage,target.name))
     target.take_damage(damage)
 magic_functions["rock throw"]=rock_throw
+
+def fire_bolt(caster,target,spell_name):
+    dice_count=int(caster.FORCE/3)
+    if isinstance(caster,Players.Player):
+        damage=dice.roll(6,1,show_result=True)
+        damage+=dice.roll(4,dice_count,show_result=True)
+    else:
+        damage=dice.roll(6,1,show_result=False)
+        damage+=dice.roll(4,dice_count,show_result=False)
+    print("{} deals {} dmg to {}".format(spell_name,damage,target.name))
+    target.take_damage(damage)
+magic_functions["firebolt"]=fire_bolt
 
 
 #Generate Spells From Cfg
@@ -58,9 +70,6 @@ for magic in cfg.spell_stats:
     new_spell=Spell(x.spell_name,"",x.typ,x.gold_cost,x.rarity,x.concentration,x.mc,magic_functions[x.spell_name])
     spells[x.spell_name]=new_spell
 
-
-#player=Players.Player("Zuvo",[],[])
-#spells["Rock Throw"].cast_spell(player,player)
 
 
 

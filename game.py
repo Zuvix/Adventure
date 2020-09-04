@@ -5,7 +5,7 @@ from colorama import init, Fore, Back, Style
 import descriptions
 import Players,spells_logic
 Enemy=None
-player=Players.Player("Zuvo",["rock throw"],[])
+player=Players.Player("Zuvo",["rock throw","firebolt"],[])
 init(convert=True)
 print(descriptions.intro)
 
