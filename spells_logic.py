@@ -1,4 +1,4 @@
-from adventurelib import when
+from adventurelib import when,say
 import cfg,Players,dice
 from colorama import Fore,Style,Back
 
@@ -26,12 +26,17 @@ class Spell:
         self.mc=mc
         self.magic_function=magic_function
     
+    def describe(self):
+        print("")
+        print(color_spell_name(self.typ,self.name)+"\nType = {}, MC = {}, Concentration = {}, Rarity = {}".format(self.typ,self.mc,self.concentration,self.rarity))
+        print(self.description)
+
     def cast_spell(self, target, caster):
         print("")
         special_name=color_spell_name(self.typ,self.name)   
         print(caster.name+ " casts "+special_name)
         if isinstance(caster,Players.Player):
-            if caster.MP>self.mc:
+            if caster.MP>=self.mc:
                 caster.MP-=self.mc
                 print("You pay "+Fore.CYAN+"{} MP".format(self.mc)+Style.RESET_ALL+" you have"+Fore.CYAN+" {}/{} MP".format(caster.MP,caster.MaxMP)+Style.RESET_ALL+ " left")
                 print("Required concentration for spell = {}".format(self.concentration))
@@ -47,7 +52,7 @@ magic_functions={}
 
 def rock_throw(caster,target,spell_name):
     damage=1+int(caster.level/2)
-    print("{} deals 2 + {} (lvl/2) = {} dmg to {}".format(spell_name,int(caster.level/2),damage,target.name))
+    print("{} deals 1 + {} (lvl/2) = {} dmg to {}".format(spell_name,int(caster.level/2),damage,target.name))
     target.take_damage(damage)
 magic_functions["rock throw"]=rock_throw
 
@@ -63,14 +68,10 @@ def fire_bolt(caster,target,spell_name):
     target.take_damage(damage)
 magic_functions["firebolt"]=fire_bolt
 
-
 #Generate Spells From Cfg
 for magic in cfg.spell_stats:
     x=cfg.spell_stats[magic]
-    new_spell=Spell(x.spell_name,"",x.typ,x.gold_cost,x.rarity,x.concentration,x.mc,magic_functions[x.spell_name])
+    new_spell=Spell(x.spell_name,x.description,x.typ,x.gold_cost,x.rarity,x.concentration,x.mc,magic_functions[x.spell_name])
     spells[x.spell_name]=new_spell
-
-
-
 
 

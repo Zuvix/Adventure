@@ -28,6 +28,7 @@ class Magic(NamedTuple):
     rarity: str
     gold_cost:int
     concentration: int
+    description: str
 
 spell_stats={}
 #Magic(name="",mc=0,typ="",rarity="",gold_cost=0,concentration=0,magic_attributes={})
@@ -40,6 +41,9 @@ spell_stats["rock throw"]=Magic(
     rarity="none",
     gold_cost=0,
     concentration=2,
+    description="""[Deals 1 + (character level / 2) damage]   
+Lifting up rocks is the first thing you learn as a Mage. 
+This task requires almost zero energy and effort, but is also not very effective as a weapon."""
 )
 
 spell_stats["firebolt"]=Magic(
@@ -49,4 +53,6 @@ spell_stats["firebolt"]=Magic(
     rarity="none",
     gold_cost=0,
     concentration=5,
+    description="""[Deals 1d6 + (1d4 per 3 points of FORCE) damage]
+TODO flavour text"""
 )
