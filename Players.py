@@ -1,5 +1,7 @@
 import cfg
 from colorama import init, Fore, Back, Style
+
+
 class Player:
     def __init__(self, name,spells,items):
         self.name=name
@@ -24,15 +26,19 @@ class Player:
         if stat_name.lower()=="vit":
             self.MaxHP+=cfg.HP_per_lvl*change
             self.VIT+=change
-            print("Your Vitality was changed by {}".format(change))
-        if stat_name.lower()=="int":
             self.inventory_size+=cfg.inventory_per_lvl*change
+            print("Your Vitality was changed by {}".format(change))
+            print("Max HP is now {}".format(self.MaxHP))
+            print("Inventory size is now {}".format(self.inventory_size))
+        if stat_name.lower()=="int":
             self.INT+=change
             print("Your Inteligence was changed by {}".format(change))
         if stat_name.lower()=="mind":
             self.spell_cast_chance+=cfg.spell_cast_per_lvl*change
+            self.MaxMP+=cfg.MP_per_lvl
             self.MIND+=change
             print("Your Mind was changed by {}".format(change))
+            print("Max MP is now {}".format(self.MaxMP))
         if stat_name.lower()=="force":
             self.FORCE+=change
             print("Your Force was changed by {}".format(change))
@@ -90,5 +96,3 @@ class Player:
         else:
             print("You can't heal, if you are at MAX HP.")
     
-#class Enemy:
-   # def __init__(self, name,spells,items):

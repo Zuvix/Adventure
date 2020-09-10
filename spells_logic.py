@@ -28,24 +28,25 @@ class Spell:
     
     def describe(self):
         print("")
-        print(color_spell_name(self.typ,self.name)+"\nType = {}, MC = {}, Concentration = {}, Rarity = {}".format(self.typ,self.mc,self.concentration,self.rarity))
+        print(color_spell_name(self.typ,self.name))
+        print("Type = {},".format(self.typ)+Fore.BLUE+" MP = {},".format(self.mc)+Style.RESET_ALL+" Concentration = {}, Rarity = {}".format(self.concentration,self.rarity))
         print(self.description)
 
     def cast_spell(self, target, caster):
         print("")
         special_name=color_spell_name(self.typ,self.name)   
-        print(caster.name+ " casts "+special_name)
+        print(caster.name+ " tries to cast "+special_name)
         if isinstance(caster,Players.Player):
             if caster.MP>=self.mc:
                 caster.MP-=self.mc
-                print("You pay "+Fore.CYAN+"{} MP".format(self.mc)+Style.RESET_ALL+" you have"+Fore.CYAN+" {}/{} MP".format(caster.MP,caster.MaxMP)+Style.RESET_ALL+ " left")
-                print("Required concentration for spell = {}".format(self.concentration))
+                print("pays: ".format(caster.name)+Fore.BLUE+"{} MP".format(self.mc)+Style.RESET_ALL+" mana left:"+Fore.BLUE+" {}/{} MP".format(caster.MP,caster.MaxMP)+Style.RESET_ALL)
+                #print("Required concentration for spell = {}".format(self.concentration))
                 result=dice.roll(20,1,show_result=False)
-                if result>=self.concentration:
-                    print(Fore.LIGHTGREEN_EX+"Casting succesful, you concentration was: {} + {} (MIND) = {}".format(result,caster.MIND,result+caster.MIND)+Style.RESET_ALL)
+                if result+caster.MIND>=self.concentration:
+                    print(Fore.LIGHTGREEN_EX+"Succes, concentration {} is >= {}".format(result+caster.MIND,self.concentration)+Style.RESET_ALL)
                     self.magic_function(caster,target,self.name)
                 else:
-                    print(Fore.LIGHTRED_EX+"Failure, your concentration was too low: {} + {} (MIND) = {}".format(result,caster.MIND,result+caster.MIND)+Style.RESET_ALL)
+                    print(Fore.LIGHTRED_EX+"Failure, concentration {} is < {}".format(result+caster.MIND,self.concentration)+Style.RESET_ALL)
 
 #Magic Functions for spells                
 magic_functions={}

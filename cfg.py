@@ -21,6 +21,7 @@ inventory_per_lvl=2
 default_spell_cast_chance=0
 spell_cast_per_lvl=1
 
+
 class Magic(NamedTuple):
     spell_name: str
     mc: int
@@ -56,3 +57,10 @@ spell_stats["firebolt"]=Magic(
     description="""[Deals 1d6 + (1d4 per 3 points of FORCE) damage]
 TODO flavour text"""
 )
+
+
+
+
+###Section enemy abbilities
+
+ability_stats[]
